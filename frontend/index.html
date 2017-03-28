@@ -113,23 +113,23 @@
                             <fieldset>
                                 <h4>Please configure your output:</h4>
                                 <div class="form-group">
-                                    <label class="sr-only" for="f1-output-file">Output File:</label>
+                                    <label  for="f1-output-file">Output File:</label>
                                     <input type="text" ng-model="outputName" name="f1-output-file" placeholder="JSON|SVG|HTML" class="f1-output-file form-control" id="f1-output-file">
                                 </div>
                                 <div class="form-group">
-                                    <label class="sr-only" for="f1-process-name">Process Name</label>
+                                    <label  for="f1-process-name">Process Name</label>
                                     <input type="text" ng-model="processName" name="f1-process-name" placeholder="Process Name" class="f1-process-name form-control" id="f1-process-name">
                                 </div>
                                  <div class="form-group">
-                                    <label class="sr-only" for="f1-pid">PID</label>
+                                    <label  for="f1-pid">PID</label>
                                     <input type="text" ng-model="pid" name="f1-pid" placeholder="PID" class="f1-pid form-control" id="f1-pid">
                                 </div>
                                 <div class="form-group">
-                                    <label class="sr-only" for="f1-operation">Operation</label>
+                                    <label  for="f1-operation">Operation</label>
                                     <input type="text" ng-model="operation" name="f1-operation" placeholder="Operation" class="f1-operation form-control" id="f1-operation">
                                 </div>
                                 <div class="form-group">
-                                    <label class="sr-only" for="f1-path_suffix">Path Suffix</label>
+                                    <label  for="f1-path_suffix">Path Suffix</label>
                                     <input type="text" ng-model="pathSuffix" name="f1-path_suffix" placeholder="Path Suffix" class="f1-path_suffix form-control" id="f1-path_suffix">
                                 </div>
                                 
@@ -142,7 +142,7 @@
                             <fieldset>
 
                                 <div id="loader" ng-show="isLoading"></div>
-                                 <iframe ng-hide="isLoading" ng-src="{{outputResFile}}" style=" width: 100%; height: 100%; "></iframe>
+                                 <iframe id="includedIframe" iframe-set-dimensions-onload ng-hide="isLoading" ng-src="{{outputResFile}}" style=" width: 100%; height: 100%; " onload="resizeIframe(this)"></iframe>
 
 
                                 

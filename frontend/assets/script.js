@@ -1,4 +1,20 @@
 var app = angular.module('frontend', ['ngFileUpload']);
+
+app.directive('iframeSetDimensionsOnload', [function(){
+return {
+    restrict: 'A',
+    link: function(scope, element, attrs){
+        element.on('load', function(){
+            /* Set the dimensions here, 
+               I think that you were trying to do something like this: */
+               var iFrameHeight = element[0].contentWindow.document.body.scrollHeight + 'px';
+               var iFrameWidth = '100%';
+               element.css('width', iFrameWidth);
+               element.css('height', iFrameHeight);
+        })
+    }
+}}])
+
 app.controller('frontendController', ['$scope', 'Upload', '$timeout', '$http', function ($scope, Upload, $timeout, $http) {
 
 
@@ -67,6 +83,7 @@ app.controller('frontendController', ['$scope', 'Upload', '$timeout', '$http', f
             }).then(function(data) {
                 $scope.isLoading = false;
                 $scope.outputResFile = "http://localhost:8080/output/"+$scope.outputName+"";
+                
                 console.log(data);
             },function(data) {
                 console.error(data);
