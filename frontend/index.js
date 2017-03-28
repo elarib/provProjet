@@ -78,7 +78,7 @@ app.post('/res', function(req, res) {
 
 
 
-   runBash(req.body.inputName, req.body.outputName, "NULL", "NULL", "NULL", req.body.pathSuffix, function(code, stdout, stderr) {
+   runBash(req.body.inputName, req.body.outputName, req.body.processName, req.body.pid, req.body.operation, req.body.pathSuffix, function(code, stdout, stderr) {
     res.send(stdout);
   });
 
