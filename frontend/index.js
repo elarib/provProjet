@@ -3,7 +3,7 @@ var util = require('util')
 var child_process = require('child_process');
 var exec = child_process.exec;
 var execSync = require("k-gun-execsync");
-
+var shell = require('shelljs');
 var express = require('express');
 var app = express();
 var path = require('path');
@@ -54,52 +54,32 @@ app.post('/upload', function(req, res) {
 
 app.listen(8080);
 
-function runBash(input, output, processName, pid, operation, pathSuffix){
+
+function runBash(input, output, processName, pid, operation, pathSuffix, callback){
 
 input = "./upload/"+input;
 output = "output/"+output;
 
 var isItError = false;
-// executes `pwd`  Logfile2.CSV logFile.html ? ? ? AbbyyZlib.dll
-// inputName  : $scope.inputName,
-//             outputName : $scope.outputName,
-//             processName: $scope.processName,
-//             pid : $scope.pid,
-//             operation : $scope.operation,
-//             pathSuffix : $scope.pathSuffix
-var cmd = "sh ../b.sh "+input+" "+output+" "+processName+" "+pid+" "+operation+" "+pathSuffix;
-console.log(cmd);
-//console.log(child_process.execSync(cmd,{encoding: 'utf-8'}).toString().trim());
-
-//var child = child_process.execSync(cmd, {encoding: 'utf-8'});
+// executes `pwd`
+//"$INPUT $DIR/frontend/$OUTPUT $PROCESS_NAME $PID $OPERATION $PATH_SUFFIX"
+var cmd ="sh ../b.sh "+input+" "+output+" "+processName+" "+pid+" "+operation+" "+pathSuffix;
 
 
-//console.log(child.toString());
-child_process.execSync("ls", function(output){
-   console.log(output);
-});
+shell.exec(cmd, {async:false}, callback);
 
 }
 
-var dumpData= {
-  "inputName":"Logfile2.CSV",
-  "operation":"NULL",
-  "outputName":"kjhjkh.html",
-  "pid":"NULL",
-  "processName":"NULL",
-  "pathSuffix":"AbbyyZlib.dll"
-};
-
-runBash(dumpData.inputName, dumpData.outputName, dumpData.processName, dumpData.pid, dumpData.operation, dumpData.pathSuffix);
 
 
 /** API path that will run the Bash Script */
 app.post('/res', function(req, res) {
-    // runBash()
-    console.log(req.body);
+ 
 
-   runBash(res, req.body.inputName, req.body.outputName, req.body.processName, req.body.pid, req.body.operation, req.body.pathSuffix);
 
-   res.send("lkjl");
+
+   runBash(req.body.inputName, req.body.outputName, "NULL", "NULL", "NULL", req.body.pathSuffix, function(code, stdout, stderr) {
+    res.send(stdout);
+  });
 
 });
