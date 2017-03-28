@@ -53,10 +53,10 @@ app.controller('frontendController', ['$scope', 'Upload', '$timeout', '$http', f
 
 
 
-    $scope.processName ="NULL";
-    $scope.pid="NULL";
-    $scope.operation ="NULL";
-    $scope.pathSuffix ="NULL";
+    $scope.processName ="?";
+    $scope.pid="?";
+    $scope.operation ="?";
+    $scope.pathSuffix ="?";
     $scope.isLoading = true;
     //$scope.outputResFile = "output/OUTPUT.HTML";
 
