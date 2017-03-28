@@ -33,44 +33,11 @@
 
     <body >
 
-		<!-- Top menu -->
-		<nav class="navbar navbar-inverse navbar-no-bg" role="navigation">
-			<div class="container">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#top-navbar-1">
-						<span class="sr-only">Toggle navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="index.html">BootZard - Bootstrap Wizard Template</a>
-				</div>
-				<!-- Collect the nav links, forms, and other content for toggling -->
-				<div class="collapse navbar-collapse" id="top-navbar-1">
-					<ul class="nav navbar-nav navbar-right">
-						<li>
-							<span class="li-text">
-								Put some text or
-							</span> 
-							<a href="#"><strong>links</strong></a> 
-							<span class="li-text">
-								here, or some icons: 
-							</span> 
-							<span class="li-social">
-								<a href="https://www.facebook.com/pages/Azmindcom/196582707093191" target="_blank"><i class="fa fa-facebook"></i></a> 
-								<a href="https://twitter.com/anli_zaimi" target="_blank"><i class="fa fa-twitter"></i></a> 
-								<a href="https://plus.google.com/+AnliZaimi_azmind" target="_blank"><i class="fa fa-google-plus"></i></a> 
-								<a href="https://github.com/AZMIND" target="_blank"><i class="fa fa-github"></i></a>
-							</span>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</nav>
+		
 
         <!-- Top content -->
         <div class="top-content">
-            <div class="container">
+            <div>
                 
                 <div class="row">
                     <div class="col-sm-8 col-sm-offset-2 text">
@@ -85,7 +52,7 @@
                 </div>
                 
                 <div class="row" ng-app="frontend" ng-controller="frontendController">
-                    <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 form-box">
+                    <div class="form-box">
                     	<form role="form" action="" method="post" class="f1">
 
                     		<h3>Register To Our App</h3>
@@ -112,27 +79,29 @@
                     		    <h4>Please upload your log file (.csv) :</h4>
                     			<div class="form-group">
                     			    <label class="sr-only" for="f1-log-csv">CSV File</label>
-                                    <input type="file" name="f1-log-csv" class="f1-log-csv form-control" id="f1-log-csv">
+                                    
+                                       <button  class="f1-log-csv form-control"  ngf-select="uploadFiles($files, $invalidFiles)" multiple
+                                              accept=".csv" ngf-max-height="1000" ngf-max-size="400MB">
+                                          Select File</button>
+
+                                      <ul>
+                                        <li ng-repeat="f in files" style="font:smaller">{{f.name}} {{f.$errorParam}}
+                                          <span class="progress" ng-show="f.progress >= 0">
+                                            <div style="width:{{f.progress}}%"  
+                                                ng-bind="f.progress + '%'"></div>
+                                          </span>
+                                        </li>
+                                        <li ng-repeat="f in errFiles" style="font:smaller">{{f.name}} {{f.$error}} {{f.$errorParam}}
+                                        </li> 
+                                      </ul>
+                                      {{errorMsg}}
+
+
+
                                 </div>
 
 
-                                <button ngf-select="uploadFiles($files, $invalidFiles)" multiple
-          accept="image/*" ngf-max-height="1000" ngf-max-size="1MB">
-      Select Files</button>
-  <br><br>
-  Files:
-  <ul>
-    <li ng-repeat="f in files" style="font:smaller">{{f.name}} {{f.$errorParam}}
-      <span class="progress" ng-show="f.progress >= 0">
-        <div style="width:{{f.progress}}%"  
-            ng-bind="f.progress + '%'"></div>
-      </span>
-    </li>
-    <li ng-repeat="f in errFiles" style="font:smaller">{{f.name}} {{f.$error}} {{f.$errorParam}}
-    </li> 
-  </ul>
-  {{errorMsg}}
-
+                             
 
                                 <div class="f1-buttons">
                                     <button type="button" class="btn btn-next">Next</button>
@@ -143,49 +112,34 @@
                                 <h4>Please configure your output:</h4>
                                 <div class="form-group">
                                     <label class="sr-only" for="f1-output-file">Output File:</label>
-                                    <input type="text" name="f1-output-file" placeholder="JSON|SVG|HTML" class="f1-output-file form-control" id="f1-output-file">
+                                    <input type="text" ng-model="outputName" name="f1-output-file" placeholder="JSON|SVG|HTML" class="f1-output-file form-control" id="f1-output-file">
                                 </div>
                                 <div class="form-group">
                                     <label class="sr-only" for="f1-process-name">Process Name</label>
-                                    <input type="text" name="f1-process-name" placeholder="Process Name" class="f1-process-name form-control" id="f1-process-name">
+                                    <input type="text" ng-model="processName" name="f1-process-name" placeholder="Process Name" class="f1-process-name form-control" id="f1-process-name">
                                 </div>
                                  <div class="form-group">
                                     <label class="sr-only" for="f1-pid">PID</label>
-                                    <input type="number" name="f1-pid" placeholder="PID" class="f1-pid form-control" id="f1-pid">
+                                    <input type="number" ng-model="pid" name="f1-pid" placeholder="PID" class="f1-pid form-control" id="f1-pid">
                                 </div>
                                 <div class="form-group">
                                     <label class="sr-only" for="f1-operation">Operation</label>
-                                    <input type="text" name="f1-operation" placeholder="Operation" class="f1-operation form-control" id="f1-operation">
+                                    <input type="text" ng-model="operation" name="f1-operation" placeholder="Operation" class="f1-operation form-control" id="f1-operation">
                                 </div>
                                 <div class="form-group">
                                     <label class="sr-only" for="f1-path_suffix">Path Suffix</label>
-                                    <input type="text" name="f1-path_suffix" placeholder="Path Suffix" class="f1-path_suffix form-control" id="f1-path_suffix">
+                                    <input type="text" ng-model="pathSuffix" name="f1-path_suffix" placeholder="Path Suffix" class="f1-path_suffix form-control" id="f1-path_suffix">
                                 </div>
                                 
                                 <div class="f1-buttons">
                                     <button type="button" class="btn btn-previous">Previous</button>
-                                    <button type="button" class="btn btn-next">Next</button>
+                                    <button type="button" ng-click="sendToServer()" class="btn btn-next">Next</button>
                                 </div>
                             </fieldset>
 
                             <fieldset>
-                                <h4>Social media profiles:</h4>
-                                <div class="form-group">
-                                    <label class="sr-only" for="f1-facebook">Facebook</label>
-                                    <input type="text" name="f1-facebook" placeholder="Facebook..." class="f1-facebook form-control" id="f1-facebook">
-                                </div>
-                                <div class="form-group">
-                                    <label class="sr-only" for="f1-twitter">Twitter</label>
-                                    <input type="text" name="f1-twitter" placeholder="Twitter..." class="f1-twitter form-control" id="f1-twitter">
-                                </div>
-                                <div class="form-group">
-                                    <label class="sr-only" for="f1-google-plus">Google plus</label>
-                                    <input type="text" name="f1-google-plus" placeholder="Google plus..." class="f1-google-plus form-control" id="f1-google-plus">
-                                </div>
-                                <div class="f1-buttons">
-                                    <button type="button" class="btn btn-previous">Previous</button>
-                                    <button type="submit" class="btn btn-submit">Submit</button>
-                                </div>
+                               
+                                
                             </fieldset>
                     	
                     	</form>
@@ -194,6 +148,7 @@
                     
             </div>
         </div>
+        
 
 
         <!-- Javascript -->
