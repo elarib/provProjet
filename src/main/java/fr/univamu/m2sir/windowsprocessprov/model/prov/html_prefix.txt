@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script language="javascript" type="text/javascript">
+$(document).ready(function(){
+	moveToStep(0);
+
+	var i =0;
+	var nbSteps = parseInt($('#lastStep').text())+1;
+	for(i=0;i<nbSteps;i++)
+		$('#stepButtonsContainer').append('<input type="button" value="'+i+'" onclick="moveToStep('+i+')"/>');
+
+	$('#prevButton').click(function(){
+		var currentStep=parseInt($('#currentStep').attr('value'));
+		moveToStep(--currentStep);
+	})
+	$('#nextButton').click(function(){
+		var currentStep=parseInt($('#currentStep').attr('value'));
+		moveToStep(++currentStep);
+	})
+});
+
+var findComments = function(el) {
+    var arr = [];
+    for(var i = 0; i < el.childNodes.length; i++) {
+        var node = el.childNodes[i];
+        if(node.nodeType === 8) {
+            arr.push(node);
+        } else {
+            arr.push.apply(arr, findComments(node));
+        }
+    }
+    return arr;
+};
+
+var moveToStep = function(step){
+	var lastStep = 0;
+	$(findComments(document)).each(function(index,value){
+		var comment = $(value);
+		var pattern = /step:\d+/;
+		if(pattern.test(value.nodeValue)){
+			var current = parseInt(value.nodeValue.match(/\d+/)[0]);
+			if(current<=step){
+				comment.next().attr('visibility','visible');
+			}
+			else{
+				comment.next().attr('visibility','hidden');
+			}
+			lastStep = lastStep>current?lastStep:current;
+		}
+	});
+	$('#lastStep').text(lastStep);
+
+	if(step===0)
+		$('#prevButton').prop("disabled", true);
+	else
+		$('#prevButton').prop("disabled", false);
+	if(step===parseInt($('#lastStep').text()))
+		$('#nextButton').prop("disabled", true);
+	else
+		$('#nextButton').prop("disabled", false);
+	$('#currentStep').attr('value',step);
+}
+
+</script>
+<title>Windows Process Prov Graph Simulation</title>
+</head>
+<body>
+
+<input type="button" id="prevButton" value="Previous"/>
+<input type="button" id="nextButton" value="Next"/>
+<input type="text" id="currentStep" disabled value="0"/>
+/ <span id="lastStep">0</span>
+<div id="stepButtonsContainer">
+	
+</div>
