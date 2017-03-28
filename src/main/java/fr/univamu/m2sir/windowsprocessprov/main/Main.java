@@ -28,10 +28,10 @@ public class Main {
 		if(args.length==6){
 			try{
 				windowsEventList = WindowsEvent.parseCsv(new File(args[0])
-						, args[2].equals("?")?null:args[2]
-						, args[3].equals("?")?null:Long.parseLong(args[3])
-						, args[4].equals("?")?null:args[4]
-						, args[5].equals("?")?null:args[5]);
+						, args[2].equals("NULL")?null:args[2]
+						, args[3].equals("NULL")?null:Long.parseLong(args[3])
+						, args[4].equals("NULL")?null:args[4]
+						, args[5].equals("NULL")?null:args[5]);
 			}catch(NumberFormatException e){
 				throw new IllegalArgumentException(INVALID_PID_ERROR_MSG);
 			}

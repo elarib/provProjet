@@ -36,10 +36,13 @@ app.controller('frontendController', ['$scope', 'Upload', '$timeout', '$http', f
 
 
 
-    $scope.pathSuffix ="AbbyyZlib.dll";
-    $scope.outputName = "logFile222.html";
-    $scope.operation ="";
-    $scope.pid=222;
+
+    $scope.processName ="NULL";
+    $scope.pid="NULL";
+    $scope.operation ="NULL";
+    $scope.pathSuffix ="NULL";
+    $scope.isLoading = true;
+    //$scope.outputResFile = "output/OUTPUT.HTML";
 
     $scope.sendToServer = function(){
            // 
@@ -48,6 +51,9 @@ app.controller('frontendController', ['$scope', 'Upload', '$timeout', '$http', f
            $scope.resData = {
             inputName  : $scope.inputName,
             outputName : $scope.outputName,
+            processName: $scope.processName,
+            pid : $scope.pid,
+            operation : $scope.operation,
             pathSuffix : $scope.pathSuffix
 
            }
@@ -59,6 +65,8 @@ app.controller('frontendController', ['$scope', 'Upload', '$timeout', '$http', f
                 url: 'http://localhost:8080/res',
                 data: $scope.resData
             }).then(function(data) {
+                $scope.isLoading = false;
+                $scope.outputResFile = "http://localhost:8080/output/"+$scope.outputName+"";
                 console.log(data);
             },function(data) {
                 console.error(data);

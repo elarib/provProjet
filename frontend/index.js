@@ -2,6 +2,7 @@
 var util = require('util')
 var child_process = require('child_process');
 var exec = child_process.exec;
+var execSync = require("k-gun-execsync");
 
 var express = require('express');
 var app = express();
@@ -19,6 +20,7 @@ app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 })); 
+app.use('/output', express.static(__dirname + '/output'));
 app.use('/assets', express.static(__dirname + '/assets'));
 app.use('/bower_components', express.static(__dirname + '/bower_components'));
 
@@ -52,18 +54,43 @@ app.post('/upload', function(req, res) {
 
 app.listen(8080);
 
-function runBash(input, output, pathSuffix){
+function runBash(input, output, processName, pid, operation, pathSuffix){
 
 input = "./upload/"+input;
 output = "output/"+output;
 
 var isItError = false;
-// executes `pwd`
-return child_process.execSync("sh ../b.sh "+input+" "+output+" "+pathSuffix);
+// executes `pwd`  Logfile2.CSV logFile.html ? ? ? AbbyyZlib.dll
+// inputName  : $scope.inputName,
+//             outputName : $scope.outputName,
+//             processName: $scope.processName,
+//             pid : $scope.pid,
+//             operation : $scope.operation,
+//             pathSuffix : $scope.pathSuffix
+var cmd = "sh ../b.sh "+input+" "+output+" "+processName+" "+pid+" "+operation+" "+pathSuffix;
+console.log(cmd);
+//console.log(child_process.execSync(cmd,{encoding: 'utf-8'}).toString().trim());
+
+//var child = child_process.execSync(cmd, {encoding: 'utf-8'});
 
 
+//console.log(child.toString());
+child_process.execSync("ls", function(output){
+   console.log(output);
+});
 
 }
+
+var dumpData= {
+  "inputName":"Logfile2.CSV",
+  "operation":"NULL",
+  "outputName":"kjhjkh.html",
+  "pid":"NULL",
+  "processName":"NULL",
+  "pathSuffix":"AbbyyZlib.dll"
+};
+
+runBash(dumpData.inputName, dumpData.outputName, dumpData.processName, dumpData.pid, dumpData.operation, dumpData.pathSuffix);
 
 
 /** API path that will run the Bash Script */
@@ -71,8 +98,8 @@ app.post('/res', function(req, res) {
     // runBash()
     console.log(req.body);
 
-   // res.send(runBash(req.body.inputName, req.body.outputName, req.body.pathSuffix));
+   runBash(res, req.body.inputName, req.body.outputName, req.body.processName, req.body.pid, req.body.operation, req.body.pathSuffix);
 
-   res.send(runBash("Logfile2.CSV", "OUTPUT.HTML", "AbbyyZlib.dll"));
+   res.send("lkjl");
 
 });

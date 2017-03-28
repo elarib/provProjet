@@ -40,6 +40,7 @@
             <div>
                 
                 <div class="row">
+
                     <div class="col-sm-8 col-sm-offset-2 text">
                         <h1>Free <strong>Bootstrap</strong> Wizard</h1>
                         <div class="description">
@@ -76,6 +77,7 @@
                     		</div>
                     		
                     		<fieldset>
+                           
                     		    <h4>Please upload your log file (.csv) :</h4>
                     			<div class="form-group">
                     			    <label class="sr-only" for="f1-log-csv">CSV File</label>
@@ -120,7 +122,7 @@
                                 </div>
                                  <div class="form-group">
                                     <label class="sr-only" for="f1-pid">PID</label>
-                                    <input type="number" ng-model="pid" name="f1-pid" placeholder="PID" class="f1-pid form-control" id="f1-pid">
+                                    <input type="text" ng-model="pid" name="f1-pid" placeholder="PID" class="f1-pid form-control" id="f1-pid">
                                 </div>
                                 <div class="form-group">
                                     <label class="sr-only" for="f1-operation">Operation</label>
@@ -138,7 +140,11 @@
                             </fieldset>
 
                             <fieldset>
-                               
+
+                                <div id="loader" ng-show="isLoading"></div>
+                                 <iframe ng-hide="isLoading" ng-src="{{outputResFile}}" style=" width: 100%; height: 100%; "></iframe>
+
+
                                 
                             </fieldset>
                     	
@@ -148,7 +154,7 @@
                     
             </div>
         </div>
-        
+
 
 
         <!-- Javascript -->
